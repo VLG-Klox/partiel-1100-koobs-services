@@ -1,21 +1,22 @@
+/* eslint-disable no-case-declarations */
 import { HttpFunction } from '@google-cloud/functions-framework/build/src/functions';
 import getCustomer from './getCustomer';
 import createPaymentWithMandate from './createPaymentWithMandate';
 import createCustomer from './createCustomer';
 
 export const http: HttpFunction = (req, res) => {
-	switch (req.method) {
-		case 'getCustomer':
-			res.status(200).send(getCustomer());
+	switch (req.path) {
+		case '/getCustomer':
+			res.status(200).send(getCustomer(req));
 			break;
-		case 'createPaymentWithMandate':
-			res.status(200).send(createPaymentWithMandate());
+		case '/createPaymentWithMandate':
+			res.status(201).send(createPaymentWithMandate(req));
 			break;
-		case 'createCustomer':
-			res.status(200).send(createCustomer());
+		case '/createCustomer':
+			res.status(201).send(createCustomer(req));
 			break;
 		default:
-			console.log('No method!');
+			res.status(405).send({ error: 'No method!' });
 			break;
 	}
 };

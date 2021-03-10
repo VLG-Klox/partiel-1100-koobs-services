@@ -2,30 +2,44 @@
  * @docs https://docs.mollie.com/reference/v2/customers-api/create-customer-payment
  */
 import createMollieClient, { Payment, SequenceType } from '@mollie/api-client';
+import * as express from 'express';
 
 const mollieClient = createMollieClient({
-	apiKey: 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM',
+	apiKey: 'test_bqWcQQ3wCurBd9ASDMQEaE6sEHV9c3',
 });
 
-const createPaymentWithMandate = (): Promise<void> =>
+// req: createPaymentWithMandate?customerId=cst_VMsyUyBuNe&amount=10.00&currency=EUR&description=Order1&redirectUrl=https://www.redirect.com&metadata=metadata(json)
+const createPaymentWithMandate = (
+	req: express.Request
+): Promise<Payment | void> =>
 	(async () => {
 		try {
+			const {
+				customerId,
+				amount,
+				currency,
+				description,
+				metadata,
+				redirectUrl,
+			} = req.query;
+
 			const payment: Payment = await mollieClient.customers_payments.create({
-				customerId: 'cst_6ruhPN4V5Q',
+				customerId: customerId as string,
 				amount: {
-					currency: 'EUR',
-					value: '10.00',
+					value: amount as string,
+					currency: currency as string,
 				},
+				description: description as string,
+				metadata: metadata as string,
 				method: [],
-				description: 'Order #12345',
+				redirectUrl: redirectUrl as string,
 				sequenceType: SequenceType.first,
-				redirectUrl: 'https://webshop.example.org/order/12345/',
-				webhookUrl: 'https://webshop.example.org/payments/webhook/',
 			});
 
-			console.log(payment);
+			return payment;
 		} catch (error) {
-			console.warn(error);
+			console.error(error);
+			return error;
 		}
 	})();
 

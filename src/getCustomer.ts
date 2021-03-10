@@ -1,20 +1,23 @@
 /**
  * @docs https://docs.mollie.com/reference/v2/customers-api/get-customer
  */
-import { createMollieClient } from '@mollie/api-client';
+import createMollieClient, { Customer } from '@mollie/api-client';
+import * as express from 'express';
 
 const mollieClient = createMollieClient({
-	apiKey: 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM',
+	apiKey: 'test_bqWcQQ3wCurBd9ASDMQEaE6sEHV9c3',
 });
 
-const getCustomer = (): Promise<void> =>
+// req: getCustomer?customerId=cst_pzhEvnttJ2
+const getCustomer = (req: express.Request): Promise<Customer | void> =>
 	(async () => {
 		try {
-			const customer = await mollieClient.customers.get('cst_pzhEvnttJ2');
+			const customerId = req.query.customerId as string;
+			const customer = await mollieClient.customers.get(customerId);
 
-			console.log(customer);
+			return customer;
 		} catch (error) {
-			console.warn(error);
+			return error;
 		}
 	})();
 
