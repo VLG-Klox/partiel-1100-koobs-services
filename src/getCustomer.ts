@@ -17,6 +17,7 @@ const getCustomer = (req: express.Request): Promise<Customer | void> =>
 
 			return customer;
 		} catch (error) {
+			console.error(error);
 			return error;
 		}
 	})();
