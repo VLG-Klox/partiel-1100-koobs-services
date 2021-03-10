@@ -2,16 +2,20 @@
   "name": "payment",
   "version": "0.1.0",
   "description": "Payment module",
-  "main": "build/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "jest",
     "build": "tsc",
+    "copy-package": "cp package.json build/",
     "start": "functions-framework --target=http --source=build/ --port=9001",
     "watch": "tsc -w --preserveWatchOutput",
     "deploy": "gcloud functions deploy payment --region europe-west1 --allow-unauthenticated --entry-point http --source=build --runtime nodejs14 --trigger-http"
   },
   "author": "serverless.com",
   "license": "MIT",
+  "dependencies": {
+    "@mollie/api-client": "^3.4.0"
+  },
   "devDependencies": {
     "@google-cloud/functions-framework": "^1.7.1",
     "@tsconfig/node14": "^1.0.0",
@@ -27,8 +31,5 @@
     "ts-jest": "26.5.3",
     "typescript": "^4.2.3",
     "typescript-eslint": "0.0.1-alpha.0"
-  },
-  "dependencies": {
-    "@mollie/api-client": "^3.4.0"
   }
 }
