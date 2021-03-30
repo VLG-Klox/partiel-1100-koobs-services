@@ -3,7 +3,7 @@
  */
 import createMollieClient, { Payment, SequenceType } from '@mollie/api-client';
 import * as express from 'express';
-import isEmpty from 'lodash';
+import isEmpty from './isEmpty';
 
 const mollieClient = createMollieClient({
 	apiKey: 'test_bqWcQQ3wCurBd9ASDMQEaE6sEHV9c3',
