@@ -3,6 +3,7 @@
  */
 import createMollieClient, { Payment, SequenceType } from '@mollie/api-client';
 import * as express from 'express';
+import isEmpty from 'lodash';
 
 const mollieClient = createMollieClient({
 	apiKey: 'test_bqWcQQ3wCurBd9ASDMQEaE6sEHV9c3',
@@ -14,6 +15,8 @@ const createPaymentWithMandate = (
 ): Promise<Payment | void> =>
 	(async () => {
 		try {
+			const requestPayment = isEmpty(req.query) ? req.body : req.query;
+
 			const {
 				customerId,
 				amount,
@@ -21,7 +24,7 @@ const createPaymentWithMandate = (
 				description,
 				metadata,
 				redirectUrl,
-			} = req.query;
+			} = requestPayment;
 
 			const payment: Payment = await mollieClient.customers_payments.create({
 				customerId: customerId as string,

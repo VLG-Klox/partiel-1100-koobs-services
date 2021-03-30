@@ -4,16 +4,27 @@ import getCustomer from './getCustomer';
 import createPaymentWithMandate from './createPaymentWithMandate';
 import createCustomer from './createCustomer';
 
-export const http: HttpFunction = (req, res) => {
+export const http: HttpFunction = async (req, res) => {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Methods', 'POST,GET');
+	res.header(
+		'Access-Control-Allow-Headers',
+		'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
+	);
+	res.setHeader('Content-Type', 'application/json');
+
 	switch (req.path) {
 		case '/getCustomer':
-			res.status(200).send(getCustomer(req));
+			const customer = await getCustomer(req);
+			res.status(200).json(customer);
 			break;
 		case '/createPaymentWithMandate':
-			res.status(201).send(createPaymentWithMandate(req));
+			const paymentWithMandate = await createPaymentWithMandate(req);
+			res.status(201).json(paymentWithMandate);
 			break;
 		case '/createCustomer':
-			res.status(201).send(createCustomer(req));
+			const createdCustomer = await createCustomer(req);
+			res.status(201).json(createdCustomer);
 			break;
 		default:
 			res.status(405).send({ error: 'No method!' });
