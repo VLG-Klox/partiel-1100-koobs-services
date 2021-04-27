@@ -1,19 +1,18 @@
-/**
- * @docs https://docs.mollie.com/reference/v2/customers-api/get-customer
- */
-import createMollieClient, { Customer } from '@mollie/api-client';
+import Stripe from 'stripe';
 import * as express from 'express';
 
-const mollieClient = createMollieClient({
-	apiKey: 'test_bqWcQQ3wCurBd9ASDMQEaE6sEHV9c3',
+const PAYMENT_TOKEN = process.env.REACT_APP_PAYMENT_TOKEN;
+
+const stripe = new Stripe(PAYMENT_TOKEN as string, {
+	apiVersion: '2020-08-27',
 });
 
 // req: getCustomer?customerId=cst_pzhEvnttJ2
-const getCustomer = (req: express.Request): Promise<Customer | void> =>
+const getCustomer = (req: express.Request): Promise<Stripe.Customer | void> =>
 	(async () => {
 		try {
 			const customerId = req.query.customerId as string;
-			const customer = await mollieClient.customers.get(customerId);
+			const customer = await stripe.customers.retrieve(customerId);
 
 			return customer;
 		} catch (error) {

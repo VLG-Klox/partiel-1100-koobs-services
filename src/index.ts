@@ -1,7 +1,8 @@
 /* eslint-disable no-case-declarations */
 import { HttpFunction } from '@google-cloud/functions-framework/build/src/functions';
 import getCustomer from './getCustomer';
-import createPaymentWithMandate from './createPaymentWithMandate';
+import confirmPaymentIntent from './confirmPaymentIntent';
+import createPaymentIntent from './createPaymentIntent';
 import createCustomer from './createCustomer';
 
 export const http: HttpFunction = async (req, res) => {
@@ -18,9 +19,13 @@ export const http: HttpFunction = async (req, res) => {
 			const customer = await getCustomer(req);
 			res.status(200).json(customer);
 			break;
-		case '/createPaymentWithMandate':
-			const paymentWithMandate = await createPaymentWithMandate(req);
-			res.status(201).json(paymentWithMandate);
+		case '/createPaymentIntent':
+			const paymentIntent = await createPaymentIntent(req);
+			res.status(201).json(paymentIntent);
+			break;
+		case '/confirmPaymentIntent':
+			const paymentIntentConfirmation = await confirmPaymentIntent(req);
+			res.status(201).json(paymentIntentConfirmation);
 			break;
 		case '/createCustomer':
 			const createdCustomer = await createCustomer(req);

@@ -14,7 +14,7 @@
   "author": "serverless.com",
   "license": "MIT",
   "dependencies": {
-    "@mollie/api-client": "^3.4.0"
+    "stripe": "^8.145.0"
   },
   "devDependencies": {
     "@google-cloud/functions-framework": "^1.7.1",
