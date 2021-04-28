@@ -2,13 +2,13 @@ import Stripe from 'stripe';
 import * as express from 'express';
 import isEmpty from './isEmpty';
 
-const PAYMENT_TOKEN = process.env.REACT_APP_PAYMENT_TOKEN;
+const PAYMENT_SECRET = process.env.PAYMENT_SECRET;
 
-const stripe = new Stripe(PAYMENT_TOKEN as string, {
+const stripe = new Stripe(PAYMENT_SECRET as string, {
 	apiVersion: '2020-08-27',
 });
 
-// req: createPaymentIntent?customerId=cst_VMsyUyBuNe&amount=1000&currency=EUR&description=Order1&metadata=metadata(json)&statement_descriptor
+// req: createPaymentIntent?customerId=cus_JNvpmCPPaha8aw&amount=1000&currency=EUR&description=Order1&statement_descriptor=Order1&payment_method_types=["card","sepa_debit"]
 const createPaymentIntent = (
 	req: express.Request
 ): Promise<Stripe.PaymentIntent | void> =>

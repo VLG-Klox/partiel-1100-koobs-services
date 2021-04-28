@@ -6,10 +6,10 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "copy-package": "cp package.json build/",
-    "start": "functions-framework --target=http --source=build/ --port=9001",
+    "copy-package": "cp package.json .env build/",
+    "start": "env-cmd functions-framework --target=http --source=build/ --port=9001",
     "watch": "tsc -w --preserveWatchOutput",
-    "deploy": "gcloud functions deploy payment --region europe-west1 --allow-unauthenticated --entry-point http --source=build --runtime nodejs14 --trigger-http"
+    "deploy": "gcloud functions deploy payment --region europe-west1 --allow-unauthenticated --entry-point http --source=build --runtime nodejs14 --trigger-http --env-vars-file .env"
   },
   "author": "serverless.com",
   "license": "MIT",
@@ -20,16 +20,17 @@
     "@google-cloud/functions-framework": "^1.7.1",
     "@tsconfig/node14": "^1.0.0",
     "@types/express": "^4.17.11",
-    "@types/node": "^14.14.32",
-    "@typescript-eslint/eslint-plugin": "^4.17.0",
-    "@typescript-eslint/parser": "^4.17.0",
-    "eslint": "^7.21.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-unicorn": "^28.0.2",
+    "@types/node": "^15.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "env-cmd": "^10.1.0",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-unicorn": "^31.0.0",
     "prettier": "^2.2.1",
-    "ts-jest": "26.5.3",
-    "typescript": "^4.2.3",
+    "ts-jest": "26.5.5",
+    "typescript": "^4.2.4",
     "typescript-eslint": "0.0.1-alpha.0"
   }
 }

@@ -1,9 +1,9 @@
 import Stripe from 'stripe';
 import * as express from 'express';
 
-const PAYMENT_TOKEN = process.env.REACT_APP_PAYMENT_TOKEN;
+const PAYMENT_SECRET = process.env.PAYMENT_SECRET;
 
-const stripe = new Stripe(PAYMENT_TOKEN as string, {
+const stripe = new Stripe(PAYMENT_SECRET as string, {
 	apiVersion: '2020-08-27',
 });
 

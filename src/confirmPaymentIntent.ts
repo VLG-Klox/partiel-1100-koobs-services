@@ -2,13 +2,13 @@ import Stripe from 'stripe';
 import * as express from 'express';
 import isEmpty from './isEmpty';
 
-const PAYMENT_TOKEN = process.env.REACT_APP_PAYMENT_TOKEN;
+const PAYMENT_SECRET = process.env.PAYMENT_SECRET;
 
-const stripe = new Stripe(PAYMENT_TOKEN as string, {
+const stripe = new Stripe(PAYMENT_SECRET as string, {
 	apiVersion: '2020-08-27',
 });
 
-// req: confirmPaymentWithMandate?customerId=cst_VMsyUyBuNe&amount=10.00&currency=EUR&description=Order1&redirectUrl=https://www.redirect.com&metadata=metadata(json)
+// req: confirmPaymentIntent?intentId=pi_1IlA1qDIVQViqH78HWujXI1W&method=card
 const confirmPaymentWithMandate = (
 	req: express.Request
 ): Promise<Stripe.PaymentIntent | void> =>
@@ -16,10 +16,10 @@ const confirmPaymentWithMandate = (
 		try {
 			const requestPayment = isEmpty(req.query) ? req.body : req.query;
 
-			const { clientSecret, method, idempotencyKey } = requestPayment;
+			const { intentId, method, idempotencyKey } = requestPayment;
 
 			const payment: Stripe.PaymentIntent = await await stripe.paymentIntents.confirm(
-				clientSecret,
+				intentId,
 				{ payment_method: method as string },
 				{
 					idempotencyKey: idempotencyKey as string,

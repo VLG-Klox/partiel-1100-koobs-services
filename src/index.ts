@@ -7,7 +7,7 @@ import createCustomer from './createCustomer';
 
 export const http: HttpFunction = async (req, res) => {
 	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Methods', 'POST,GET');
+	res.header('Access-Control-Allow-Methods', 'POST,GET,OPTIONS');
 	res.header(
 		'Access-Control-Allow-Headers',
 		'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept'
