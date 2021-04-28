@@ -9,7 +9,7 @@
     "copy-package": "cp package.json .env build/",
     "start": "env-cmd functions-framework --target=http --source=build/ --port=9001",
     "watch": "tsc -w --preserveWatchOutput",
-    "deploy": "gcloud functions deploy payment --region europe-west1 --allow-unauthenticated --entry-point http --source=build --runtime nodejs14 --trigger-http --env-vars-file .env"
+    "deploy": "gcloud functions deploy payment --region europe-west1 --allow-unauthenticated --entry-point http --source=build --runtime nodejs14 --trigger-http"
   },
   "author": "serverless.com",
   "license": "MIT",

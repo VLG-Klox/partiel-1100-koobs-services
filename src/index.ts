@@ -1,9 +1,9 @@
 /* eslint-disable no-case-declarations */
 import { HttpFunction } from '@google-cloud/functions-framework/build/src/functions';
 import getCustomer from './getCustomer';
-import confirmPaymentIntent from './confirmPaymentIntent';
 import createPaymentIntent from './createPaymentIntent';
 import createCustomer from './createCustomer';
+import webhook from './webhook';
 
 export const http: HttpFunction = async (req, res) => {
 	res.header('Access-Control-Allow-Origin', '*');
@@ -23,13 +23,13 @@ export const http: HttpFunction = async (req, res) => {
 			const paymentIntent = await createPaymentIntent(req);
 			res.status(201).json(paymentIntent);
 			break;
-		case '/confirmPaymentIntent':
-			const paymentIntentConfirmation = await confirmPaymentIntent(req);
-			res.status(201).json(paymentIntentConfirmation);
-			break;
 		case '/createCustomer':
 			const createdCustomer = await createCustomer(req);
 			res.status(201).json(createdCustomer);
+			break;
+		case '/webhook':
+			const webhook = await webhook(req);
+			res.status(201).json(webhook);
 			break;
 		default:
 			res.status(405).send({ error: 'No method!' });
