@@ -1,7 +1,7 @@
 {
-  "name": "payment",
+  "name": "partiel-cto-1100",
   "version": "0.1.0",
-  "description": "Payment module",
+  "description": "partiel-cto-1100",
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -9,13 +9,11 @@
     "copy-package": "cp package.json .env build/",
     "start": "env-cmd functions-framework --target=http --source=build/ --port=9001",
     "watch": "tsc -w --preserveWatchOutput",
-    "deploy": "gcloud functions deploy payment --region europe-west1 --allow-unauthenticated --entry-point http --source=build --runtime nodejs14 --trigger-http"
+    "deploy": "gcloud functions deploy partiel-cto-1100 --region europe-west1 --allow-unauthenticated --entry-point http --source=build --runtime nodejs14 --trigger-http"
   },
-  "author": "serverless.com",
+  "author": "1100",
   "license": "MIT",
-  "dependencies": {
-    "stripe": "^8.145.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@google-cloud/functions-framework": "^1.7.1",
     "@tsconfig/node14": "^1.0.0",
